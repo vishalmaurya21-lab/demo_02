@@ -22,13 +22,11 @@
             <input type="text" name="phone" id="phone" placeholder="enter phone"><br><br>
 
             @forelse ($courses as $course)
-                
                 <input type="checkbox" name="courses[]" value="{{ $course->id }}">
             {{ $course->name }}
             @empty
-                
+                <p>No courses available.</p>
             @endforelse
-            
             <br><br>
             <input type="submit" name="submit" value="Submit"><br>
         </form>

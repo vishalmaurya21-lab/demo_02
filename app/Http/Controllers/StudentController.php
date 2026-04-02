@@ -9,14 +9,6 @@ use Illuminate\Http\Request;
 class StudentController extends Controller
 {
     /**
-     * Display a listing of the resource.
-     */
-    public function index()
-    {
-        //
-    }
-
-    /**
      * Show the form for creating a new resource.
      */
     public function create()
@@ -48,7 +40,7 @@ class StudentController extends Controller
      */
     public function show(Student $student)
     {
-        $students = Student::all();
+        $students = Student::paginate(5);
         // dd($students);
         // return redirect()->route('student.show')->with('success', 'student a');
         return view('/student/dashboard', compact('students'));
@@ -57,24 +49,45 @@ class StudentController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(Student $student)
+    public function edit($id)
     {
-        //
+        $student = Student::with('courses')->findOrFail($id);
+        $courses = Course::all();
+        return view('student.edit', compact('student', 'courses'));
     }
 
     /**
      * Update the specified resource in storage.
      */
-    public function update(Request $request, Student $student)
+    public function update(Request $request, $id)
     {
-        //
+        $student = Student::find($id);
+        $data = $request->validate([
+            'name' => 'required',
+            'email' => 'required',
+            'phone' => 'required',
+        ]);
+
+        $student->update($data);
+        session(['username' => $student['name']]);
+        $student->courses()->sync($request->course ?? []);
+
+        return redirect()->route('student.show')->with('success', 'student record updated');
     }
 
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Student $student)
+    public function delete($id)
     {
-        //
+        $student = Student::find($id);
+        $student->delete();
+        session()->forget('username');
+        return redirect()->route('student.show')->with('success', 'student delete successfully');
+    }
+    public function logout()
+    {
+        session()->forget('username');
+        return redirect()->route('home')->with('success', 'student logout successfully');
     }
 }

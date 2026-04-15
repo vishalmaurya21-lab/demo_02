@@ -13,14 +13,14 @@ class CourseSeeder extends Seeder
      */
     public function run(): void
     {
-         $courses = [
-        ['name' => 'Laravel', 'description' => 'Laravel Course'],
-        ['name' => 'React', 'description' => 'Frontend Library'],
-        ['name' => 'NodeJS', 'description' => 'Backend JS'],
-    ];
+        $courses = [
+            ['name' => 'Laravel', 'description' => 'Laravel Course'],
+            ['name' => 'React', 'description' => 'Frontend Library'],
+            ['name' => 'NodeJS', 'description' => 'Backend JS'],
+        ];
 
-    foreach ($courses as $course) {
-        \App\Models\Course::create($course);
-    }
+        foreach ($courses as $course) {
+            \App\Models\Course::create($course);
+        }
     }
 }

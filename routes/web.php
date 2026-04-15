@@ -7,6 +7,7 @@ use App\Models\Course;
 // Route::get('/', function () {
 //     return view('/student/home');
 // });
+
 Route::get('/', [StudentController::class, 'create'])->name('home');
 
 Route::controller(StudentController::class)->prefix('/student')->group(function () {

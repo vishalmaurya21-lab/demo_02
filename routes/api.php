@@ -12,7 +12,18 @@ Route::post('/users', function () {
     return response()->json("Post api hit successfully");
 });
 
-// Route::get('/users', [UserController::class, 'index']);
-// Route::post('/users', [UserController::class, 'store']);
+Route::delete('/user/{id}', function ($id) {
+    return response("Delete: " . $id, 200);
+});
 
-// $documnet({"name":'ahul'},{"name", "dept"});
+Route::put('/user/{id}', function ($id) {
+    return response("PUT: " . $id, 200);
+});
+
+// API's
+
+Route::get("test", function () {
+    p("P function working");
+});
+
+Route::post('user/store', 'App\Http\Controllers\Api\UserController@store');
